@@ -15,12 +15,12 @@
     "clean": "rm -rf dist",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/",
-    "test": "jest"
+    "lint": "biome check src/",
+    "fix": "biome check src/ --unsafe --write"
   },
   "devDependencies": {
-    "@repo/config-eslint": "*",
-    "@repo/config-typescript": "*",
+    "@repo/config-typescript": "workspace:*",
+    "@repo/config-biome": "workspace:*",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.62",

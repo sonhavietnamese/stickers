@@ -6,6 +6,7 @@
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
+    "fix": "turbo run fix",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck"
   },
@@ -22,5 +23,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.7"
+  }
 }
