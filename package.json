@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.1",
+    "prettier": "^3.2.5",
+    "turbo": "^2.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "name": "kitchen-sink",
+  "packageManager": "bun@1.1.8",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

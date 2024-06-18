@@ -1,0 +1,9 @@
+{
+  "name": "@repo/config-biome",
+  "license": "MIT",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.1"
+  }
+}
