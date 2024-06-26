@@ -5,11 +5,12 @@
   "scripts": {
     "next-dev": "next dev -p 3501",
     "build": "next build",
-    "start": "next start",
+    "next-start": "next start",
     "lint": "biome lint --write",
     "fix": "biome check --unsafe --write",
     "flask-dev": "export FLASK_APP=app/api/v1/p/index.py && python3 -m flask run -p 5328",
     "dev": "concurrently \"bun run next-dev\" \"bun run flask-dev\"",
+    "start": "concurrently \"bun run next-start\" \"bun run flask-dev\"",
     "install-pip": "pip3 install -r requirements.txt"
   },
   "dependencies": {
