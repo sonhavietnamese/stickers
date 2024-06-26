@@ -14,6 +14,10 @@ class RemoveBackgroundRequest(BaseModel):
 MODEL_NAME = "u2net"
 session = new_session(MODEL_NAME)
 
+@app.route("/api/v1/p", methods = ['GET'])
+def health_check():
+    return {"message": "Server is up and running!"}
+
 
 @app.route("/api/v1/p", methods = ['POST'])
 def remove_background():
