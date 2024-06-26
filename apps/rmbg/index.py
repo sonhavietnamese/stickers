@@ -34,8 +34,7 @@ def remove_background():
 
     img = Image.open(BytesIO(img_data))
     img_resized = img.resize((512, 512))
-    output_removed = remove(img_resized, session=session,
-    post_process_mask=True)
+    output_removed = remove(img_resized, session=session)
     buffered = BytesIO()
     output_removed.save(buffered, format="PNG")
 

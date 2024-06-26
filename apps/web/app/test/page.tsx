@@ -1,46 +1,56 @@
 "use client"
 
+import {outline} from "@/lib/utils.ts";
 import {type ChangeEvent, useState} from "react";
 
 export default function Page() {
   const [rawImage, setRawImage] = useState<string | null>(null)
-  const [processedImage, setProcessedImage] = useState<string | null>(null);
+  const [processedImage, setProcessedImage] = useState<string | null>(null)
+  const [outlinedImage, setOutlinedImage] = useState<string | null>(null)
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0]
     if (file) {
-      const fileType = file.type;
-      if (fileType === 'image/jpeg' || fileType === 'image/png') {
-        const reader = new FileReader();
+      const fileType = file.type
+      if (fileType === "image/jpeg" || fileType === "image/png") {
+        const reader = new FileReader()
         reader.onloadend = async () => {
-          const base64String = reader.result as string;
-          setRawImage(base64String);
+          const base64String = reader.result as string
+          setRawImage(base64String)
 
           // Upload the image to the /v1/img endpoint
-          const response = await fetch('/api/v1/p', {
-            method: 'POST',
+          const response = await fetch("/api/v1/p", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({ image: base64String.split(",")[1] })
-          });
+            body: JSON.stringify({ image: base64String.split(",")[1] }),
+          })
 
           if (response.ok) {
-            const data = await response.json();
-            setProcessedImage(data.image);
+            const data = await response.json()
+            setProcessedImage(data.image)
+
+            const img = new Image()
+
+            img.crossOrigin = "anonymous"
+            img.onload = () => {
+              setOutlinedImage(outline(img, 10, "white").toDataURL())
+            }
+            img.src = `data:image/png;base64,${data.image}`
           } else {
-            console.error('Upload failed:', response.statusText);
+            console.error("Upload failed:", response.statusText)
           }
-        };
-        reader.readAsDataURL(file);
+        }
+        reader.readAsDataURL(file)
       } else {
-        alert('Invalid file type. Only .jpg and .png files are accepted.');
+        alert("Invalid file type. Only .jpg and .png files are accepted.")
       }
     }
-  };
+  }
 
   return (
-    <main className={"w-screen h-screen bg-background"}>
+    <main className={"w-screen min-h-screen bg-red-300"}>
       <div className="max-w-md w-full space-y-8">
         <div>
           <label
@@ -69,7 +79,22 @@ export default function Page() {
       {processedImage && (
         <div className={"w-[400px] h-auto"}>
           <span>Raw</span>
-          <img src={`data:image/png;base64,${ processedImage }`} alt="uploaded " className={"w-full h-auto"} />
+          <img
+            src={`data:image/png;base64,${processedImage}`}
+            alt="uploaded "
+            className={"w-full h-auto"}
+          />
+        </div>
+      )}
+
+      {outlinedImage && (
+        <div className={"w-[400px] h-auto"}>
+          <span>Raw</span>
+          <img
+            src={outlinedImage}
+            alt="uploaded "
+            className={"w-full h-auto"}
+          />
         </div>
       )}
     </main>
