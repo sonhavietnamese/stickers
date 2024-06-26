@@ -25,6 +25,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "react-fast-marquee": "^1.6.4"
   }
 }

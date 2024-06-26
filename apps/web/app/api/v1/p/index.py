@@ -1,4 +1,3 @@
-# from fastapi import FastAPI
 from rembg import remove, new_session
 from PIL import Image
 from pydantic import BaseModel
@@ -14,10 +13,6 @@ class RemoveBackgroundRequest(BaseModel):
 
 MODEL_NAME = "u2net"
 session = new_session(MODEL_NAME)
-
-
-input_path = '/Users/ha.nguyen/workspace/playground/stickers/apps/web/app/api/v1/p/IMG_2291.jpg'
-output_path = '/Users/ha.nguyen/workspace/playground/stickers/apps/web/app/api/v1/p/output.png'
 
 
 @app.route("/api/v1/p", methods = ['POST'])

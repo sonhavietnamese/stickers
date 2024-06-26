@@ -3,10 +3,15 @@
 import Image from 'next/image'
 import { useCallback, useEffect } from 'react'
 import { type Editor, Tldraw, track, useEditor } from 'tldraw'
+import Marquee from "react-fast-marquee";
 
 function CustomUiExample() {
   const handleMount = useCallback((editor: Editor) => {
     console.log('editor', editor)
+
+    editor.setCurrentTool('draw')
+
+    // editor.addListener("")
 
     // editor.asset
 
@@ -84,18 +89,7 @@ function CustomUiExample() {
     // })
   }, [])
 
-  return (
-    <Tldraw
-      // acceptedImageMimeTypes={['image/jpeg', 'image/png']}
-      // maxAssetSize={1 * 1024 * 1024}
-      // maxImageDimension={Number.POSITIVE_INFINITY}
-      // acceptedVideoMimeTypes={[]}
-      onMount={handleMount}
-    />
-    // <Tldraw hideUi>
-    //   <CustomUi />
-    // </Tldraw>
-  )
+  return <Tldraw className='z-10' hideUi onMount={handleMount} />
 }
 
 const CustomUi = track(() => {
@@ -151,7 +145,7 @@ const CustomUi = track(() => {
 export default function Page() {
   return (
     <main className='w-screen h-screen leading-none relative overflow-hidden'>
-      <figure className='absolute z-20 left-1/2 -translate-x-1/2'>
+      <figure className='absolute z-30 left-1/2 -translate-x-1/2'>
         <Image src={'/assets/logo.png'} className='w-[150px]' width={150} height={200} alt='' />
       </figure>
 
@@ -175,37 +169,38 @@ export default function Page() {
         </figure>
       </div>
 
-      <section className='w-full h-full p-5 '>
-        <div className='w-full h-full relative bg-[#F7F3F0] rounded-2xl border'>
-          <div className='absolute bottom-0 left-1/2 -translate-x-1/2'>
-            <button type='button'>Wau</button>
-          </div>
-
-          <div className='absolute bottom-0 left-0 bg-green-300 h-[90px] w-[320px]'>
-            <button type='button'>Wau</button>
-          </div>
-
-          <div className='absolute bottom-0 right-0 flex flex-col gap-3'>
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div className='flex gap-2 items-center' key={i}>
-                <div className='flex'>
-                  {Array.from({ length: 4 }).map((_, i) => (
-                    <button type='button' key={i} className='w-12 rounded-full aspect-square bg-red-400'>
-                      Wau
-                    </button>
-                  ))}
-                </div>
-                <button type='button' className='w-12 rounded-full aspect-square bg-red-400'>
-                  Wau
-                </button>
-              </div>
-            ))}
-          </div>
+      <section className='w-full h-full p-5 absolute'>
+        <div className='w-full h-full relative bg-[#F7F3F0] rounded-2xl border overflow-hidden'>
+          <CustomUiExample />
         </div>
       </section>
-      {/* <div className='fixed inset-0'>
-        <CustomUiExample />
-      </div> */}
+
+      <div className='absolute bottom-5 left-1/2 -translate-x-1/2'>
+        <button type='button'>Wauasdasdas</button>
+      </div>
+
+      <div className='absolute select-none bottom-[21px] left-[21px] rounded-2xl overflow-hidden z-20 h-[90px] w-[320px]'>
+        <Marquee pauseOnHover={true} gradient={true} speed={20} className={"h-full w-full"} gradientColor={"#F9FAFB"}>
+          I can be a React component, multiple React components, or just some text.
+        </Marquee>
+      </div>
+
+      <div className='absolute bottom-0 right-0 flex flex-col gap-3'>
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div className='flex gap-2 items-center' key={i}>
+            <div className='flex'>
+              {Array.from({ length: 4 }).map((_, i) => (
+                <button type='button' key={i} className='w-12 rounded-full aspect-square bg-red-400'>
+                  Wau
+                </button>
+              ))}
+            </div>
+            <button type='button' className='w-12 rounded-full aspect-square bg-red-400'>
+              Wau
+            </button>
+          </div>
+        ))}
+      </div>
     </main>
   )
 }
