@@ -1,10 +1,20 @@
 "use client"
 
-import {outline} from "@/lib/utils"
+import Decors from "@/components/decors.tsx"
+import { outline } from "@/lib/utils"
+import { Avatar } from "@coinbase/onchainkit/identity"
 import NextImage from "next/image"
-import {useCallback} from "react"
+import { useCallback } from "react"
 import Marquee from "react-fast-marquee"
-import {AssetRecordType, type Editor, Tldraw, getHashForString, track, uniqueId, useEditor, useTools,} from "tldraw"
+import {
+  AssetRecordType,
+  type Editor,
+  Tldraw,
+  getHashForString,
+  track,
+  uniqueId,
+  useTools,
+} from "tldraw"
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -19,8 +29,6 @@ function fileToBase64(file: File): Promise<string> {
 
 async function loadImage(base64Image: string): Promise<HTMLImageElement> {
   return new Promise<HTMLImageElement>((resolve, reject) => {
-    console.log(base64Image)
-
     const img = new Image()
     img.crossOrigin = "anonymous"
     img.onload = () => {
@@ -82,7 +90,6 @@ function CustomUiExample() {
 
 const CustomUi = track(() => {
   const tools = useTools()
-  const editor = useEditor()
 
   return (
     <div className="custom-layout">
@@ -102,106 +109,47 @@ const CustomUi = track(() => {
 export default function Page() {
   return (
     <main className="w-screen h-screen leading-none relative overflow-hidden">
-      <figure className="absolute z-30 left-1/2 -translate-x-1/2">
-        <NextImage
-          src={"/assets/logo.png"}
-          className="w-[150px]"
-          width={150}
-          height={200}
-          alt=""
-        />
-      </figure>
-
-      <div className="absolute z-20 left-0 top-0 w-[200px] h-[100px]">
-        <figure className="absolute -left-12 -top-[40px]">
-          <NextImage
-            src={"/assets/tl-01.png"}
-            className="w-[150px]"
-            width={150}
-            height={200}
-            alt=""
-          />
-        </figure>
-
-        <figure className="absolute left-2 top-[10px]">
-          <NextImage
-            src={"/assets/tl-02.png"}
-            className="w-[150px]"
-            width={150}
-            height={200}
-            alt=""
-          />
-        </figure>
-      </div>
-
-      <div className="absolute z-20 right-0 top-0 w-[200px] h-[100px]">
-        <figure className="absolute z-20 -right-4 -top-[60px]">
-          <NextImage
-            src={"/assets/tr-01.png"}
-            className="w-[150px]"
-            width={150}
-            height={200}
-            alt=""
-          />
-        </figure>
-
-        <figure className="absolute -right-[40px] -top-[10px]">
-          <NextImage
-            src={"/assets/tr-02.png"}
-            className="w-[150px]"
-            width={150}
-            height={200}
-            alt=""
-          />
-        </figure>
-      </div>
+      <Decors />
 
       <section className="w-full h-full p-5 absolute">
         <div className="w-full h-full relative bg-[#F7F3F0] rounded-2xl border overflow-hidden">
           <CustomUiExample />
         </div>
       </section>
-
-      {/*<div className="absolute bottom-5 z-20 left-1/2 -translate-x-1/2">*/}
-      {/*  <button type="button">Wauasdasdas</button>*/}
-      {/*</div>*/}
-
-      <div className="absolute select-none bottom-[21px] left-[21px] rounded-2xl overflow-hidden z-20 h-[90px] w-[320px]">
+      <div className="absolute select-none bottom-[21px] rounded-bl-2xl left-[21px] overflow-hidden z-20 h-[90px] w-[320px]">
         <Marquee
           pauseOnHover={true}
           gradient={true}
+          gradientWidth={100}
           speed={20}
           className={"h-full w-full"}
           gradientColor={"#F9FAFB"}
         >
-          I can be a React component, multiple React components, or just some
-          text.
+          <div
+            className={
+              "w-[90px] items-center flex justify-center h-full aspect-square"
+            }
+          >
+            <NextImage
+              src={"https://vitejs.dev/logo-uwu.png"}
+              alt={"uwu"}
+              width={320}
+              height={90}
+            />
+          </div>
         </Marquee>
       </div>
 
-      {/*<div className="absolute bottom-0 z-20 right-0 flex flex-col gap-3">*/}
-      {/*  {Array.from({ length: 4 }).map((_, i) => (*/}
-      {/*    <div className="flex gap-2 items-center" key={i}>*/}
-      {/*      <div className="flex">*/}
-      {/*        {Array.from({ length: 4 }).map((_, i) => (*/}
-      {/*          <button*/}
-      {/*            type="button"*/}
-      {/*            key={i}*/}
-      {/*            className="w-12 rounded-full aspect-square bg-red-400"*/}
-      {/*          >*/}
-      {/*            Wau*/}
-      {/*          </button>*/}
-      {/*        ))}*/}
-      {/*      </div>*/}
-      {/*      <button*/}
-      {/*        type="button"*/}
-      {/*        className="w-12 rounded-full aspect-square bg-red-400"*/}
-      {/*      >*/}
-      {/*        Wau*/}
-      {/*      </button>*/}
-      {/*    </div>*/}
-      {/*  ))}*/}
-      {/*</div>*/}
+      <div className="absolute bottom-8 z-20 right-8 flex flex-col gap-2">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div className={"w-10 aspect-square"} key={i}>
+            <Avatar
+              key={i}
+              address="0x838aD0EAE54F99F1926dA7C3b6bFbF617389B4D9"
+            />
+          </div>
+        ))}
+      </div>
     </main>
   )
 }

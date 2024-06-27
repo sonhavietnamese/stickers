@@ -1,15 +1,16 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import OnchainProviders from "@/components/onchain-provider.tsx";
+import {ThemeProvider} from '@/components/theme-provider'
+import type {Metadata, Viewport} from 'next'
+import {Inter} from 'next/font/google'
 import './globals.css'
 import 'tldraw/tldraw.css'
-import { ThemeProvider } from '@/components/theme-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] })
 
-const APP_NAME = 'Stickers Club'
-const APP_DEFAULT_TITLE = 'Stickers'
-const APP_TITLE_TEMPLATE = '%s - PWA App'
-const APP_DESCRIPTION = 'Best PWA app in the world!'
+const APP_NAME = "Stickers Club"
+const APP_DEFAULT_TITLE = "Stickers"
+const APP_TITLE_TEMPLATE = "%s - PWA App"
+const APP_DESCRIPTION = "Best PWA app in the world!"
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#FFFFFF',
+  themeColor: "#FFFFFF",
 }
 
 export default function RootLayout({
@@ -56,11 +57,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute='class' defaultTheme='light' enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+        <OnchainProviders>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </OnchainProviders>
       </body>
     </html>
   )
