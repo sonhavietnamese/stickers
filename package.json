@@ -27,9 +27,12 @@
   "dependencies": {
     "@coinbase/onchainkit": "^0.23.2",
     "@tanstack/react-query": "^5.48.0",
+    "@zoralabs/protocol-deployments": "^0.1.13",
+    "@zoralabs/protocol-sdk": "^0.7.0",
     "canvas": "^2.11.2",
     "concurrently": "^8.2.2",
     "react-fast-marquee": "^1.6.4",
-    "viem": "^2.16.2"
+    "viem": "^2.16.2",
+    "wagmi": "^2.10.7"
   }
 }

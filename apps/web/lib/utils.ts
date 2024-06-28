@@ -1,6 +1,6 @@
-import {type Canvas, type Image, createCanvas } from 'canvas';
-import {type ClassValue, clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
+import { type Canvas, type Image, createCanvas } from "canvas"
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -100,4 +100,33 @@ export const outline = (
   ctx.drawImage(img as Image, x, y)
 
   return trim(canvas)
+}
+
+export function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      resolve(reader.result as string)
+    }
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
+
+export async function loadImage(
+  base64Image: string,
+): Promise<HTMLImageElement> {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = "anonymous"
+    img.onload = () => {
+      try {
+        resolve(img)
+      } catch (error) {
+        reject(error)
+      }
+    }
+    img.onerror = reject
+    img.src = base64Image
+  })
 }

@@ -1,5 +1,4 @@
-import OnchainProviders from "@/components/onchain-provider.tsx"
-import type {Metadata} from "next"
+import type { Metadata } from "next"
 
 const APP_NAME = "Stickers Club | Me"
 const APP_DEFAULT_TITLE = "Stickers"
@@ -18,5 +17,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <OnchainProviders>{children}</OnchainProviders>
+  return children
 }

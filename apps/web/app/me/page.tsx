@@ -1,8 +1,9 @@
 "use client"
 
 import Decors from "@/components/decors.tsx"
-import { outline } from "@/lib/utils"
+import { fileToBase64, loadImage, outline } from "@/lib/utils"
 import { Avatar } from "@coinbase/onchainkit/identity"
+import { ConnectAccount } from "@coinbase/onchainkit/wallet"
 import NextImage from "next/image"
 import { useCallback } from "react"
 import Marquee from "react-fast-marquee"
@@ -15,33 +16,7 @@ import {
   uniqueId,
   useTools,
 } from "tldraw"
-
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      resolve(reader.result as string)
-    }
-    reader.onerror = reject
-    reader.readAsDataURL(file)
-  })
-}
-
-async function loadImage(base64Image: string): Promise<HTMLImageElement> {
-  return new Promise<HTMLImageElement>((resolve, reject) => {
-    const img = new Image()
-    img.crossOrigin = "anonymous"
-    img.onload = () => {
-      try {
-        resolve(img)
-      } catch (error) {
-        reject(error)
-      }
-    }
-    img.onerror = reject
-    img.src = base64Image
-  })
-}
+import { useAccount } from "wagmi"
 
 function CustomUiExample() {
   const handleMount = useCallback((editor: Editor) => {
@@ -62,7 +37,7 @@ function CustomUiExample() {
       const data = await response.json()
       const loadedImage = await loadImage(`data:image/png;base64,${data.image}`)
 
-      const outlined = outline(loadedImage, 10, "black").toDataURL()
+      const outlined = outline(loadedImage, 8, "black").toDataURL()
       const loadedOutlined = await loadImage(outlined)
 
       return AssetRecordType.create({
@@ -107,9 +82,37 @@ const CustomUi = track(() => {
 })
 
 export default function Page() {
+  const account = useAccount()
+
+  const handleMint = async () => {
+    // const { testClient, walletClient, publicClient } = viemClients;
+    // const creatorAccount = (await walletClient.getAddresses())[0]!;
+    // const creatorAccount = (await walletClient.getAddresses())[0]
+    // console.log(creatorAccount)
+  }
+
   return (
     <main className="w-screen h-screen leading-none relative overflow-hidden">
       <Decors />
+
+      <figure className="absolute z-30 bottom-0 left-1/2 -translate-x-1/2">
+        <button
+          className={"bg-red-300 p-4 rounded-2xl"}
+          onClick={handleMint}
+          type={"button"}
+        >
+          Test mint
+        </button>
+
+        <ConnectAccount />
+        {/*<Image*/}
+        {/*  src={"/assets/logo.png"}*/}
+        {/*  className="w-[150px]"*/}
+        {/*  width={150}*/}
+        {/*  height={200}*/}
+        {/*  alt=""*/}
+        {/*/>*/}
+      </figure>
 
       <section className="w-full h-full p-5 absolute">
         <div className="w-full h-full relative bg-[#F7F3F0] rounded-2xl border overflow-hidden">
@@ -122,16 +125,44 @@ export default function Page() {
           gradient={true}
           gradientWidth={100}
           speed={20}
-          className={"h-full w-full"}
+          className={"h-full w-full space-x-2"}
           gradientColor={"#F9FAFB"}
         >
           <div
             className={
-              "w-[90px] items-center flex justify-center h-full aspect-square"
+              "w-[90px] items-center flex justify-center h-full aspect-square mr-4"
             }
           >
             <NextImage
               src={"https://vitejs.dev/logo-uwu.png"}
+              alt={"uwu"}
+              width={320}
+              height={90}
+            />
+          </div>
+
+          <div
+            className={
+              "w-[90px] items-center flex justify-center h-full aspect-square mr-4"
+            }
+          >
+            <NextImage
+              src={"https://www.haskell.org/img/haskell-uwu.png"}
+              alt={"uwu"}
+              width={320}
+              height={90}
+            />
+          </div>
+
+          <div
+            className={
+              "w-[90px] items-center flex justify-center h-full aspect-square "
+            }
+          >
+            <NextImage
+              src={
+                "https://nextjs.org/_next/image?url=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Fv1714730590%2Ffront%2Fnextjs%2Fuwu%2Fnext-uwu-logo.png&w=1080&q=75"
+              }
               alt={"uwu"}
               width={320}
               height={90}
@@ -144,7 +175,7 @@ export default function Page() {
         {Array.from({ length: 4 }).map((_, i) => (
           <div className={"w-10 aspect-square"} key={i}>
             <Avatar
-              key={i}
+              className={"w-full h-full"}
               address="0x838aD0EAE54F99F1926dA7C3b6bFbF617389B4D9"
             />
           </div>
